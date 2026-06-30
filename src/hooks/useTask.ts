@@ -1,4 +1,3 @@
-// src/hooks/useTask.ts
 import { useState, useEffect } from "react";
 import {
   createTask,
@@ -10,7 +9,6 @@ import {
 import { useAuth } from "../context/AuthContext";
 import type { Task, TaskColumn } from "../types";
 
-// ─── Shape return value ───────────────────────────────────────────────────────
 interface UseTaskReturn {
   tasks: Task[];
   todoTasks: Task[];
@@ -46,7 +44,7 @@ export function useTask(projectId: string): UseTaskReturn {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // ─── Subscribe realtime ke semua tasks ───────────────────────────────────────
+  //  Subscribe realtime ke semua tasks 
   useEffect(() => {
     if (!projectId) return;
 
@@ -58,12 +56,12 @@ export function useTask(projectId: string): UseTaskReturn {
     return unsubscribe;
   }, [projectId]);
 
-  // ─── Filter tasks per kolom ───────────────────────────────────────────────────
+  //  Filter tasks per kolom 
   const todoTasks  = tasks.filter((t) => t.column === "todo");
   const doingTasks = tasks.filter((t) => t.column === "doing");
   const doneTasks  = tasks.filter((t) => t.column === "done");
 
-  // ─── Buat task baru ───────────────────────────────────────────────────────────
+  //  Buat task baru 
   async function handleCreateTask(
     title: string,
     description: string,
@@ -85,7 +83,7 @@ export function useTask(projectId: string): UseTaskReturn {
     }
   }
 
-  // ─── Edit task ────────────────────────────────────────────────────────────────
+  //  Edit task 
   async function handleUpdateTask(
     taskId: string,
     title: string,
@@ -109,7 +107,7 @@ export function useTask(projectId: string): UseTaskReturn {
     }
   }
 
-  // ─── Pindah kolom (drag & drop) ───────────────────────────────────────────────
+  //  Pindah kolom (drag & drop) 
   async function handleMoveTask(
     taskId: string,
     newColumn: TaskColumn,
@@ -118,8 +116,6 @@ export function useTask(projectId: string): UseTaskReturn {
     if (!user) return;
     setError(null);
 
-    // Optimistic update — update UI dulu sebelum tunggu Firestore
-    // supaya drag & drop terasa instan
     setTasks((prev) =>
       prev.map((t) =>
         t.id === taskId
@@ -132,11 +128,10 @@ export function useTask(projectId: string): UseTaskReturn {
       await moveTask(projectId, taskId, newColumn, newOrder);
     } catch {
       setError("Gagal memindahkan task. Silakan coba lagi.");
-      // Kalau gagal, Firestore snapshot akan otomatis revert UI
     }
   }
 
-  // ─── Hapus task ───────────────────────────────────────────────────────────────
+  //  Hapus task 
   async function handleDeleteTask(taskId: string): Promise<void> {
     if (!user) return;
     setError(null);

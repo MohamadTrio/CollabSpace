@@ -1,7 +1,5 @@
-// src/components/chat/ChatMessage.tsx
 import { useState } from "react";
 import type { ChatMessage } from "../../types";
-
 import { getAvatarColor, getInitials } from "../../lib/avatar";
 
 interface Props {
@@ -50,7 +48,7 @@ export default function ChatMessageItem({ message, isOwn, onDelete }: Props) {
       <div
         className={`max-w-[75%] ${isOwn ? "items-end" : "items-start"} flex flex-col`}
       >
-        {/* Nama pengirim — hanya untuk pesan orang lain */}
+        {/* Nama pengirim */}
         {!isOwn && (
           <span className="text-xs text-gray-400 mb-0.5 px-1">
             {message.senderName}
@@ -75,7 +73,7 @@ export default function ChatMessageItem({ message, isOwn, onDelete }: Props) {
         </span>
       </div>
 
-      {/* Tombol hapus — hanya pesan sendiri */}
+      {/* Tombol hapus  */}
       {isOwn && showDelete && (
         <button
           onClick={handleDelete}

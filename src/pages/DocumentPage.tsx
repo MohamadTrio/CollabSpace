@@ -1,12 +1,9 @@
-// src/pages/DocumentPage.tsx
 import { useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useDocument } from "../hooks/useDocument";
 import { useProject } from "../hooks/useProject";
 import { exportResultToPDF } from "../lib/exportPdf";
-
-// Components
 import Spinner from "../components/shared/Spinner";
 import DocumentEditor from "../components/docs/DocumentEditor";
 import OnlineUsers from "../components/docs/OnlineUsers";
@@ -16,7 +13,7 @@ import ChatPanel from "../components/chat/ChatPanel";
 export default function DocumentPage() {
   const { documentId } = useParams<{ documentId: string }>();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams(); // ← tambah ini
+  const [searchParams] = useSearchParams();
   const { user } = useAuth();
 
   // Ambil projectId dari query param ?from=projectId
@@ -42,7 +39,7 @@ export default function DocumentPage() {
 
   const [showChat, setShowChat] = useState(false);
 
-  // ─── Loading ─────────────────────────────────────────────────────────────────
+  //  Loading 
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -51,7 +48,7 @@ export default function DocumentPage() {
     );
   }
 
-  // ─── Dokumen tidak ditemukan ──────────────────────────────────────────────────
+  //  Dokumen tidak ditemukan 
   if (!document) {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center text-center p-4">
@@ -80,9 +77,7 @@ export default function DocumentPage() {
     }
   }
 
-  // ─── Download functions ───────────────────────────────────────────────────────
-
-  // Ubah fungsi printAsPdf menjadi asinkron
+  //  Download functions 
   async function handleDownloadPdf() {
     if (!content) return;
     try {
@@ -95,12 +90,11 @@ export default function DocumentPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* ── Navbar editor ───────────────────────────────────────────────────── */}
+      {/*  Navbar editor  */}
       <header className="border-b border-gray-200 px-4 py-2 flex items-center gap-3 sticky top-0 bg-white z-40">
         {/* Tombol kembali */}
-        {/* Tombol kembali */}
         <button
-          onClick={handleBack} // ← ganti dari navigate(-1)
+          onClick={handleBack}
           className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition shrink-0"
         >
           <svg
@@ -118,7 +112,7 @@ export default function DocumentPage() {
           </svg>
         </button>
 
-        {/* Judul dokumen — bisa diedit langsung */}
+        {/* Judul dokumen */}
         <input
           type="text"
           value={title}
@@ -128,7 +122,6 @@ export default function DocumentPage() {
           className="flex-1 text-lg font-semibold text-gray-900 bg-transparent border-none outline-none focus:bg-gray-50 rounded-lg px-2 py-1 transition disabled:cursor-default min-w-0"
         />
 
-        {/* Kanan: save status, online users, tombol chat */}
         <div className="flex items-center gap-3 shrink-0">
           {/* Save status */}
           <SaveStatus isSaving={isSaving} lastSaved={lastSaved} />
@@ -137,7 +130,6 @@ export default function DocumentPage() {
           <OnlineUsers users={onlineUsers} />
 
           {/* Tombol toggle chat */}
-          {/* Tombol toggle chat — hanya owner & editor */}
           {canEdit && (
             <button
               onClick={() => setShowChat((prev) => !prev)}
@@ -190,9 +182,8 @@ export default function DocumentPage() {
         </div>
       </header>
 
-      {/* ── Body ────────────────────────────────────────────────────────────── */}
       <div className="flex flex-1">
-        {/* Editor — scroll normal mengikuti konten */}
+        {/* Editor */}
         <main className="flex-1 overflow-y-auto">
           <DocumentEditor
             content={content}
@@ -202,8 +193,7 @@ export default function DocumentPage() {
           />
         </main>
 
-        {/* Chat panel — fixed, tidak ikut scroll body */}
-        {/* Chat panel — hanya owner & editor */}
+        {/* Chat panel  */}
         {showChat && canEdit && (
           <div className="fixed top-14.25 right-0 bottom-0 w-80 bg-white border-l border-gray-200 flex flex-col z-30 shadow-lg">
             <ChatPanel

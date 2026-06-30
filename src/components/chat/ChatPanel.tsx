@@ -1,4 +1,3 @@
-// src/components/chat/ChatPanel.tsx
 import { useEffect, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useChat } from "../../hooks/useChat";
@@ -28,10 +27,9 @@ export default function ChatPanel({ documentId, onClose }: Props) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // src/components/chat/ChatPanel.tsx
   return (
     <div className="flex flex-col h-full">
-      {/* Header — fixed di atas chat */}
+      {/* Header */}
       <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2">
           <svg
@@ -72,7 +70,7 @@ export default function ChatPanel({ documentId, onClose }: Props) {
         </button>
       </div>
 
-      {/* Messages — HANYA bagian ini yang scroll */}
+      {/* Messages */}
       <div className="flex-1 overflow-y-auto min-h-0 px-3 py-3 space-y-1">
         {loading ? (
           <div className="flex items-center justify-center py-8">
@@ -113,7 +111,7 @@ export default function ChatPanel({ documentId, onClose }: Props) {
         <div ref={bottomRef} />
       </div>
 
-      {/* Input — fixed di bawah chat */}
+      {/* Input */}
       <ChatInput onSend={handleSendMessage} isSending={isSending} />
     </div>
   );

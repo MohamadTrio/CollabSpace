@@ -1,4 +1,3 @@
-// src/components/shared/Navbar.tsx
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useAuth as useAuthActions } from "../../hooks/useAuth";
@@ -8,8 +7,6 @@ export default function Navbar() {
   const { user } = useAuth();
   const { handleLogout, loading } = useAuthActions();
 
-  // Ambil inisial nama untuk avatar
-  // Ganti bagian avatar
   const initials = getInitials(user?.name ?? "?");
   const { bg, text } = getAvatarColor(user?.name ?? "");
 

@@ -1,4 +1,3 @@
-// src/components/docs/SaveStatus.tsx
 interface Props {
   isSaving: boolean;
   lastSaved: Date | null;

@@ -1,4 +1,3 @@
-// src/components/dashboard/CreateProjectModal.tsx
 import { useState } from "react";
 
 interface Props {
@@ -31,7 +30,6 @@ export default function CreateProjectModal({ onClose, onCreate }: Props) {
   }
 
   return (
-    // Backdrop
     <div
       className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       onClick={onClose}

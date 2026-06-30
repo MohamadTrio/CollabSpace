@@ -1,5 +1,3 @@
-// src/lib/ExportPdf.ts
-
 type Html2PdfChain = {
   set: (opt: Record<string, unknown>) => {
     from: (el: HTMLElement) => {
@@ -12,7 +10,7 @@ type Html2PdfLoader = ((opt?: unknown) => Html2PdfChain) & {
   default?: (opt?: unknown) => Html2PdfChain;
 };
 
-// ─── Konversi <ol> dan <ul> ke tabel supaya angka/bullet selalu sejajar ───────
+//  Konversi <ol> dan <ul> ke tabel supaya angka/bullet selalu sejajar 
 function convertListsForPdf(html: string): string {
   // Konversi <ol> → tabel dengan angka di kolom kiri
   html = html.replace(/<ol>([\s\S]*?)<\/ol>/g, (_, items) => {
@@ -108,7 +106,7 @@ export async function exportResultToPDF(
 
   const container = document.createElement("div");
 
-  // ─── CSS ──────────────────────────────────────────────────────────────────────
+  //  CSS 
   const style = document.createElement("style");
   style.textContent = `
     * { box-sizing: border-box; }
@@ -171,7 +169,7 @@ export async function exportResultToPDF(
   `;
   container.appendChild(style);
 
-  // ─── Content wrapper ──────────────────────────────────────────────────────────
+  //  Content wrapper 
   const contentWrapper = document.createElement("div");
   contentWrapper.className = "pdf-content";
 
@@ -193,7 +191,7 @@ export async function exportResultToPDF(
 
   container.appendChild(contentWrapper);
 
-  // ─── Opsi html2pdf ────────────────────────────────────────────────────────────
+  //  Opsi html2pdf
   const filename = `${(title || "Dokumen")
     .replace(/[^a-zA-Z0-9\s]/g, "")
     .replace(/\s+/g, "_")}_${new Date().toISOString().slice(0, 10)}.pdf`;

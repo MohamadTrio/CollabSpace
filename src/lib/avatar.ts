@@ -1,4 +1,3 @@
-// Warna-warna
 const AVATAR_COLORS: { bg: string; text: string }[] = [
   { bg: "bg-blue-100",   text: "text-blue-700"   },
   { bg: "bg-purple-100", text: "text-purple-700"  },

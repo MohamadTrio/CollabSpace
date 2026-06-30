@@ -1,4 +1,3 @@
-// src/components/project/ProjectHeader.tsx
 import { useNavigate } from "react-router-dom";
 import type { Project } from "../../types";
 
@@ -38,7 +37,7 @@ export default function ProjectHeader({ project, isOwner, onInvite, onEdit, onDe
 
         {/* Action buttons — hanya owner */}
         {isOwner && (
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             {/* Invite */}
             <button
               onClick={onInvite}

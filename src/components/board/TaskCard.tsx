@@ -1,10 +1,8 @@
-// src/components/board/TaskCard.tsx
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { Task } from "../../types";
 import ConfirmDialog from "../shared/ConfirmDialog";
-// src/components/board/TaskCard.tsx
 import { getAvatarColor, getInitials } from "../../lib/avatar";
 
 interface Props {
@@ -24,7 +22,6 @@ export default function TaskCard({
 }: Props) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  // Ganti bagian assignee avatar
   const { bg, text } = getAvatarColor(task.assigneeName);
   const initials = getInitials(task.assigneeName);
 
@@ -66,7 +63,6 @@ export default function TaskCard({
       <div
         ref={setNodeRef}
         style={style}
-        // 2. SESUAIKAN STYLING CURSOR AGAR SESUAI DENGAN canEdit 👇
         className={`bg-white rounded-lg border p-3 group transition ${
           isDragging
             ? "shadow-xl border-blue-300 rotate-2 cursor-grabbing"
@@ -78,14 +74,13 @@ export default function TaskCard({
         {/* Drag handle + actions */}
         <div className="flex items-start justify-between gap-2 mb-2">
           {/* Drag handle */}
-          {/* 3. SEMBUNYIKAN/UBAH DRAG HANDLE JIKA TIDAK BISA EDIT 👇 */}
           <div
             {...attributes}
             {...listeners}
             className={`mt-0.5 shrink-0 ${
               canEdit
                 ? "text-gray-300 hover:text-gray-500 cursor-grab active:cursor-grabbing"
-                : "text-transparent cursor-default" // Sembunyikan handle jika Viewer
+                : "text-transparent cursor-default"
             }`}
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -98,7 +93,7 @@ export default function TaskCard({
             {task.title}
           </p>
 
-          {/* Edit & Delete — hanya muncul saat hover dan canEdit */}
+          {/* Edit & Delete */}
           {canEdit && !isDragging && (
             <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition shrink-0">
               <button

@@ -1,10 +1,7 @@
-// src/pages/DashboardPage.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useProjects } from "../hooks/useProject";
-
-// Components
 import Navbar from "../components/shared/Navbar";
 import Spinner from "../components/shared/Spinner";
 import ProjectCard from "../components/dashboard/ProjectCard";

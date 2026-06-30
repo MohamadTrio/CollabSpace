@@ -1,6 +1,4 @@
-// src/types/index.ts
-
-// ─── User ────────────────────────────────────────────────────────────────────
+//  User 
 export interface User {
   uid: string;
   name: string;
@@ -8,7 +6,7 @@ export interface User {
   createdAt: Date;
 }
 
-// ─── Member & Role ───────────────────────────────────────────────────────────
+//  Member & Role 
 export type Role = "owner" | "editor" | "viewer";
 
 export interface Member {
@@ -18,7 +16,7 @@ export interface Member {
   role: Role;
 }
 
-// ─── Project ─────────────────────────────────────────────────────────────────
+//  Project 
 export interface Project {
   id: string;
   name: string;
@@ -29,7 +27,7 @@ export interface Project {
   createdAt: Date;
 }
 
-// ─── Task ────────────────────────────────────────────────────────────────────
+//  Task 
 export type TaskColumn = "todo" | "doing" | "done";
 
 export interface Task {
@@ -44,7 +42,7 @@ export interface Task {
   createdAt: Date;
 }
 
-// ─── Document ────────────────────────────────────────────────────────────────
+//  Document 
 export interface Document {
   id: string;
   projectId: string;
@@ -56,7 +54,7 @@ export interface Document {
   updatedAt: Date;
 }
 
-// ─── Chat ────────────────────────────────────────────────────────────────────
+//  Chat 
 export interface ChatMessage {
   id: string;
   documentId: string;
@@ -66,7 +64,7 @@ export interface ChatMessage {
   createdAt: Date;
 }
 
-// ─── Presence (Realtime DB) ──────────────────────────────────────────────────
+//  Presence (Realtime DB) 
 export interface OnlineUser {
   uid: string;
   name: string;

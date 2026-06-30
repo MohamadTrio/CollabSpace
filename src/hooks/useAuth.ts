@@ -1,9 +1,7 @@
-// src/hooks/useAuth.ts
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register, login, logout } from "../lib/auth";
 
-// ─── Shape return value hook ──────────────────────────────────────────────────
 interface UseAuthReturn {
   loading: boolean;
   error: string | null;

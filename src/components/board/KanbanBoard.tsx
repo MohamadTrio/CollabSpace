@@ -8,7 +8,6 @@ import {
   useSensors,
   type DragStartEvent,
   type DragEndEvent,
-  type DragOverEvent,
 } from "@dnd-kit/core";
 import { useTask } from "../../hooks/useTask";
 import type { Member, Task, TaskColumn } from "../../types";
@@ -58,7 +57,7 @@ export default function KanbanBoard({ projectId, members, canEdit }: Props) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // harus drag minimal 8px sebelum aktif
+        distance: 8,
       },
     })
   );

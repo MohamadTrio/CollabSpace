@@ -1,4 +1,3 @@
-// src/lib/presence.ts
 import {
   ref,
   set,
@@ -31,7 +30,6 @@ export function joinDocument(
   // Otomatis hapus saat user tutup tab / disconnect
   onDisconnect(presenceRef).remove();
 
-  // Return fungsi leave untuk dipanggil saat unmount
   return () => remove(presenceRef);
 }
 
@@ -41,8 +39,6 @@ export function leaveDocument(documentId: string, uid: string): void {
   remove(presenceRef);
 }
 
-// ─── Update typing indicator ─────────────────────────────────────────────────
-// src/lib/presence.ts — hapus console.log
 export function setTyping(
   documentId: string,
   uid: string,
@@ -60,7 +56,7 @@ export function setTyping(
   }
 }
 
-// ─── Subscribe siapa saja yang online di dokumen ─────────────────────────────
+// siapa saja yang online di dokumen
 export function subscribeToPresence(
   documentId: string,
   currentUid: string,
@@ -85,7 +81,7 @@ export function subscribeToPresence(
   return () => off(presenceRef);
 }
 
-// ─── Subscribe typing indicator — siapa yang sedang mengetik ─────────────────// src/lib/presence.ts
+//  Subscribe typing indicator — siapa yang sedang mengetik
 
 export function subscribeToTyping(
   documentId: string,
@@ -105,12 +101,12 @@ export function subscribeToTyping(
 
     const active = Object.values(data)
       .filter((u) => {
-        if (u.uid === currentUid) return false; // bukan diri sendiri
-        if (!u.isTyping) return false; // harus isTyping true
-        if (!u.typingTimestamp) return false; // harus ada timestamp
-        return now - u.typingTimestamp < 3000; // dan masih fresh (<3 detik)
+        if (u.uid === currentUid) return false;
+        if (!u.isTyping) return false; 
+        if (!u.typingTimestamp) return false; 
+        return now - u.typingTimestamp < 3000; 
       })
-      .map((u) => u.name); // ← perhatikan ini ambil .name bukan .uid
+      .map((u) => u.name);
 
     callback(active);
   });

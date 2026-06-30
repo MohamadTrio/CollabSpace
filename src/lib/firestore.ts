@@ -1,9 +1,7 @@
-// src/lib/firestore.ts
 import {
   collection,
   doc,
   addDoc,
-  setDoc,
   updateDoc,
   deleteDoc,
   getDoc,
@@ -32,10 +30,6 @@ import type {
 const toDate = (v: Timestamp | Date | undefined): Date =>
   v instanceof Timestamp ? v.toDate() : (v ?? new Date());
 
-// ═════════════════════════════════════════════════════════════════════════════
-// PROJECTS
-// ═════════════════════════════════════════════════════════════════════════════
-
 // Buat proyek baru
 export async function createProject(
   ownerId: string,
@@ -63,7 +57,7 @@ export async function createProject(
   return ref.id;
 }
 
-// Ambil semua proyek milik user (realtime)
+// Ambil semua proyek milik user
 export function subscribeToProjects(
   uid: string,
   callback: (projects: Project[]) => void,
@@ -84,7 +78,7 @@ export function subscribeToProjects(
   });
 }
 
-// Ambil satu proyek (realtime)
+// Ambil satu proyek
 export function subscribeToProject(
   projectId: string,
   callback: (project: Project | null) => void,
@@ -137,7 +131,7 @@ export async function deleteProject(projectId: string): Promise<void> {
   await batch.commit();
 }
 
-// ─── Members ──────────────────────────────────────────────────────────────────
+// Members 
 
 // Invite anggota — cari user by email dulu
 export async function inviteMember(
@@ -206,16 +200,12 @@ export async function removeMember(
 
   batch.update(projectRef, {
     members,
-    memberUids: arrayRemove(uid), // 👈 TAMBAHKAN BARIS INI
+    memberUids: arrayRemove(uid),
   });
   await batch.commit();
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
 // TASKS
-// ═════════════════════════════════════════════════════════════════════════════
-
-// Buat task baru
 export async function createTask(
   projectId: string,
   title: string,
@@ -223,7 +213,6 @@ export async function createTask(
   assigneeId: string,
   assigneeName: string,
 ): Promise<void> {
-  // Hitung order — taruh di posisi terakhir kolom todo
   const snap = await getDocs(
     query(
       collection(db, "projects", projectId, "tasks"),
@@ -243,7 +232,7 @@ export async function createTask(
   });
 }
 
-// Ambil semua tasks (realtime)
+// Ambil semua tasks
 export function subscribeToTasks(
   projectId: string,
   callback: (tasks: Task[]) => void,
@@ -301,10 +290,6 @@ export async function deleteTask(
   await deleteDoc(doc(db, "projects", projectId, "tasks", taskId));
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// DOCUMENTS
-// ═════════════════════════════════════════════════════════════════════════════
-
 // Buat dokumen baru
 export async function createDocument(
   projectId: string,
@@ -324,7 +309,7 @@ export async function createDocument(
   return ref.id;
 }
 
-// Ambil semua dokumen dalam proyek (realtime)
+// Ambil semua dokumen dalam proyek
 export function subscribeToDocuments(
   projectId: string,
   callback: (documents: Document[]) => void,
@@ -346,7 +331,7 @@ export function subscribeToDocuments(
   });
 }
 
-// Ambil satu dokumen (realtime)
+// Ambil satu dokumen 
 export function subscribeToDocument(
   documentId: string,
   callback: (document: Document | null) => void,
@@ -363,7 +348,7 @@ export function subscribeToDocument(
   });
 }
 
-// Update isi dokumen (dipanggil tiap auto-save)
+// Update isi dokumen
 export async function updateDocumentContent(
   documentId: string,
   content: string,
@@ -403,10 +388,7 @@ export async function deleteDocument(documentId: string): Promise<void> {
   await batch.commit();
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
 // CHAT
-// ═════════════════════════════════════════════════════════════════════════════
-
 // Kirim pesan
 export async function sendMessage(
   documentId: string,
@@ -423,7 +405,7 @@ export async function sendMessage(
   });
 }
 
-// Ambil pesan chat (realtime)
+// Ambil pesan chat
 export function subscribeToChat(
   documentId: string,
   callback: (messages: ChatMessage[]) => void,

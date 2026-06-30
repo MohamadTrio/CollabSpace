@@ -1,10 +1,9 @@
-// src/components/board/CreateTaskModal.tsx
 import { useState } from "react";
 import type { Member, Task } from "../../types";
 
 interface Props {
   members: Record<string, Member>;
-  task?: Task;           // kalau ada = mode edit
+  task?: Task;         
   onClose: () => void;
   onCreate: (
     title: string,

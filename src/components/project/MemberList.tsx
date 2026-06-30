@@ -1,4 +1,3 @@
-// src/components/project/MemberList.tsx
 import { useState } from "react";
 import type { Member } from "../../types";
 import ConfirmDialog from "../shared/ConfirmDialog";
@@ -23,7 +22,6 @@ export default function MemberList({
   const [confirmUid, setConfirmUid] = useState<string | null>(null);
   const [updatingUid, setUpdatingUid] = useState<string | null>(null);
 
-  // 👇 INI BAGIAN YANG KITA UBAH (Logika Sorting) 👇
   const memberList = Object.values(members).sort((a, b) => {
     // 1. Prioritas 1: User yang sedang login (Kamu) selalu paling atas
     if (a.uid === currentUid) return -1;
@@ -36,7 +34,6 @@ export default function MemberList({
     // 3. Prioritas 3: Sisanya diurutkan berdasarkan abjad A-Z
     return a.name.localeCompare(b.name);
   });
-  // 👆 ------------------------------------------ 👆
 
   const roleColor: Record<string, string> = {
     owner: "bg-blue-100 text-blue-700",
@@ -69,7 +66,7 @@ export default function MemberList({
         {memberList.map((member) => {
           const isMe = member.uid === currentUid;
           const isOwnerMember = member.role === "owner";
-          const { bg, text } = getAvatarColor(member.name); // ← di sini
+          const { bg, text } = getAvatarColor(member.name);
           const initials = getInitials(member.name);
 
           return (
@@ -120,7 +117,7 @@ export default function MemberList({
                 </span>
               )}
 
-              {/* Tombol keluarkan / keluar */}
+              {/* Tombol keluarkan*/}
               {!isOwnerMember && (isOwner || isMe) && (
                 <button
                   onClick={() => setConfirmUid(member.uid)}

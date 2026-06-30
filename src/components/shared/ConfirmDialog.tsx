@@ -1,4 +1,3 @@
-// src/components/shared/ConfirmDialog.tsx
 interface Props {
   title: string;
   message: string;

@@ -1,4 +1,3 @@
-// src/hooks/useProject.ts
 import { useState, useEffect } from "react";
 import {
   createProject,
@@ -11,11 +10,9 @@ import {
   removeMember,
 } from "../lib/firestore";
 import { useAuth } from "../context/AuthContext";
-import type { Project, Role } from "../types";
+import type { Project } from "../types";
 
-// ═════════════════════════════════════════════════════════════════════════════
-// useProjects — untuk DashboardPage (daftar semua proyek)
-// ═════════════════════════════════════════════════════════════════════════════
+//DashboardPage (daftar semua proyek)
 interface UseProjectsReturn {
   projects: Project[];
   loading: boolean;
@@ -68,9 +65,7 @@ export function useProjects(): UseProjectsReturn {
   return { projects, loading, error, handleCreateProject, clearError };
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// useProject — untuk ProjectPage (satu proyek spesifik)
-// ═════════════════════════════════════════════════════════════════════════════
+// ProjectPage (satu proyek spesifik)
 interface UseProjectReturn {
   project: Project | null;
   loading: boolean;
@@ -161,8 +156,6 @@ export function useProject(projectId: string): UseProjectReturn {
 
   // ─── Keluarkan / keluar dari proyek ─────────────────────────────────────────
   async function handleRemoveMember(uid: string): Promise<void> {
-    // Owner bisa keluarkan siapa saja
-    // Non-owner hanya bisa keluarkan diri sendiri (leave)
     if (!isOwner && uid !== user?.uid) return;
     setError(null);
     try {

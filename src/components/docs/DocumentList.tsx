@@ -1,4 +1,3 @@
-// src/components/docs/DocumentList.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDocuments } from "../../hooks/useDocument";
@@ -23,12 +22,11 @@ export default function DocumentList({ projectId, canEdit }: Props) {
   } = useDocuments(projectId);
 
   const [showCreateModal, setShowCreateModal] = useState(false);
-  // Tambahkan variabel ini
   const hasDocuments = documents.length > 0;
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  // ─── Buat dokumen & langsung buka ────────────────────────────────────────────
+  // Buat dokumen & langsung buka
   async function handleCreate(title: string) {
     const docId = await handleCreateDocument(title);
     if (docId) {
@@ -36,7 +34,7 @@ export default function DocumentList({ projectId, canEdit }: Props) {
     }
   }
 
-  // ─── Hapus dokumen ────────────────────────────────────────────────────────────
+  // Hapus dokumen 
   async function handleDelete(documentId: string) {
     setDeletingId(documentId);
     await handleDeleteDocument(documentId);
@@ -44,7 +42,7 @@ export default function DocumentList({ projectId, canEdit }: Props) {
     setConfirmDeleteId(null);
   }
 
-  // ─── Format tanggal ───────────────────────────────────────────────────────────
+  // Format tanggal
   function formatDate(date: Date): string {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
@@ -75,13 +73,11 @@ export default function DocumentList({ projectId, canEdit }: Props) {
   return (
     <div>
       {/* Toolbar */}
-      {/* Toolbar */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm text-gray-500">
           {documents.length} dokumen
         </span>
 
-        {/* Tombol "Dokumen Baru" — hanya tampil kalau sudah ada dokumen */}
         {canEdit && hasDocuments && (
           <button
             onClick={() => setShowCreateModal(true)}
@@ -119,7 +115,6 @@ export default function DocumentList({ projectId, canEdit }: Props) {
       )}
 
       {/* Empty state */}
-      {/* Empty state */}
       {documents.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-4">
@@ -139,7 +134,6 @@ export default function DocumentList({ projectId, canEdit }: Props) {
           </div>
 
           {canEdit ? (
-            // Pesan untuk owner/editor
             <>
               <h3 className="text-gray-900 font-medium mb-1">
                 Belum ada dokumen
@@ -155,7 +149,6 @@ export default function DocumentList({ projectId, canEdit }: Props) {
               </button>
             </>
           ) : (
-            // Pesan untuk viewer
             <>
               <h3 className="text-gray-900 font-medium mb-1">
                 Belum ada dokumen
@@ -241,7 +234,7 @@ function DocumentCard({
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-md transition group relative">
-      {/* Tombol hapus — muncul saat hover, hanya owner */}
+      {/* Tombol hapus */}
       {canEdit && (
         <button
           onClick={(e) => {
@@ -289,7 +282,7 @@ function DocumentCard({
         </button>
       )}
 
-      {/* Klik card → buka dokumen */}
+      {/* buka dokumen */}
       <div onClick={onOpen} className="cursor-pointer">
         {/* Icon */}
         <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-100 transition">

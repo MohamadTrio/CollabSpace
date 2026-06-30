@@ -1,4 +1,3 @@
-// src/components/docs/OnlineUsers.tsx
 import type { OnlineUser } from "../../types";
 import { getAvatarColor, getInitials } from "../../lib/avatar";
 
@@ -16,8 +15,8 @@ export default function OnlineUsers({ users }: Props) {
     <div className="flex items-center">
       <div className="flex -space-x-2">
         {visible.map((u) => {
-          const { bg, text } = getAvatarColor(u.name);  // ← di dalam map
-          const initials = getInitials(u.name);           // ← di dalam map
+          const { bg, text } = getAvatarColor(u.name); 
+          const initials = getInitials(u.name);        
           return (
             <div
               key={u.uid}

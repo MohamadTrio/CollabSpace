@@ -1,4 +1,3 @@
-// src/components/dashboard/ProjectCard.tsx
 import type { Project } from "../../types";
 import { Users } from "lucide-react";
 

@@ -1,10 +1,7 @@
-// src/pages/ProjectPage.tsx
 import { useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useProject } from "../hooks/useProject";
-
-// Components
 import Navbar from "../components/shared/Navbar";
 import Spinner from "../components/shared/Spinner";
 import ConfirmDialog from "../components/shared/ConfirmDialog";
@@ -185,7 +182,7 @@ export default function ProjectPage() {
   );
 }
 
-// ─── Edit Project Modal (inline karena kecil) ─────────────────────────────────
+//  Edit Project Modal
 interface EditProjectModalProps {
   name: string;
   description: string;

@@ -1,4 +1,3 @@
-// src/hooks/useDocument.ts
 import { useState, useEffect, useRef, useCallback } from "react";
 import {
   createDocument,
@@ -18,9 +17,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 import type { Document, OnlineUser } from "../types";
 
-// ═════════════════════════════════════════════════════════════════════════════
-// useDocuments — untuk DocumentList (daftar dokumen dalam proyek)
-// ═════════════════════════════════════════════════════════════════════════════
+// DocumentList
 interface UseDocumentsReturn {
   documents: Document[];
   loading: boolean;
@@ -47,7 +44,7 @@ export function useDocuments(projectId: string): UseDocumentsReturn {
     return unsubscribe;
   }, [projectId]);
 
-  // ─── Buat dokumen baru ───────────────────────────────────────────────────────
+  //  Buat dokumen baru 
   async function handleCreateDocument(title: string): Promise<string | null> {
     if (!user) return null;
     setError(null);
@@ -60,7 +57,7 @@ export function useDocuments(projectId: string): UseDocumentsReturn {
     }
   }
 
-  // ─── Hapus dokumen ───────────────────────────────────────────────────────────
+  //  Hapus dokumen
   async function handleDeleteDocument(documentId: string): Promise<void> {
     setError(null);
     try {
@@ -84,9 +81,7 @@ export function useDocuments(projectId: string): UseDocumentsReturn {
   };
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// useDocument — untuk DocumentPage (editor satu dokumen)
-// ═════════════════════════════════════════════════════════════════════════════
+// DocumentPage (editor satu dokumen)
 interface UseDocumentReturn {
   document: Document | null;
   content: string;
@@ -100,7 +95,7 @@ interface UseDocumentReturn {
   handleTitleChange: (newTitle: string) => Promise<void>;
 }
 
-const SAVE_DEBOUNCE_MS = 1500; // tunggu 1.5 detik setelah berhenti mengetik
+const SAVE_DEBOUNCE_MS = 1500; 
 
 export function useDocument(documentId: string): UseDocumentReturn {
   const { user } = useAuth();
@@ -113,11 +108,10 @@ export function useDocument(documentId: string): UseDocumentReturn {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Refs untuk debounce — pakai ref supaya tidak trigger re-render
   const saveTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const typingTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
-  // ─── Subscribe ke dokumen ────────────────────────────────────────────────────
+  // Subscribe ke dokumen 
   useEffect(() => {
     if (!documentId) return;
 
@@ -125,9 +119,6 @@ export function useDocument(documentId: string): UseDocumentReturn {
       if (!doc) return;
       setDocument(doc);
       setTitle(doc.title);
-
-      // Hanya update content dari Firestore kalau tidak sedang mengetik
-      // (tidak ada save timer aktif) — mencegah konten loncat saat mengetik
       if (!saveTimerRef.current) {
         setContent(doc.content);
       }
@@ -138,7 +129,7 @@ export function useDocument(documentId: string): UseDocumentReturn {
     return unsubscribe;
   }, [documentId]);
 
-  // ─── Join & leave presence ───────────────────────────────────────────────────
+  //  Join & leave presence 
   useEffect(() => {
     if (!user || !documentId) return;
 
@@ -158,7 +149,7 @@ export function useDocument(documentId: string): UseDocumentReturn {
     };
   }, [documentId, user?.uid]);
 
-  // ─── Handle content change dengan debounced auto-save ────────────────────────
+  //  Handle content change dengan debounced auto-save 
   const handleContentChange = useCallback(
     (newContent: string) => {
       if (!user) return;
@@ -194,10 +185,10 @@ export function useDocument(documentId: string): UseDocumentReturn {
     [documentId, user],
   );
 
-  // ─── Handle title change ─────────────────────────────────────────────────────
+  //  Handle title change 
   async function handleTitleChange(newTitle: string): Promise<void> {
     if (!user) return;
-    setTitle(newTitle);
+    setTitle(newTitle); 
     try {
       await updateDocumentTitle(documentId, newTitle);
     } catch {
@@ -206,7 +197,7 @@ export function useDocument(documentId: string): UseDocumentReturn {
     }
   }
 
-  // ─── Cleanup timer saat unmount ──────────────────────────────────────────────
+  //  Cleanup timer saat unmount 
   useEffect(() => {
     return () => {
       clearTimeout(saveTimerRef.current);

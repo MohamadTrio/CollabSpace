@@ -1,4 +1,3 @@
-// src/pages/NotFoundPage.tsx
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -9,7 +8,7 @@ export default function NotFoundPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 text-center">
 
-      {/* Ilustrasi angka 404 */}
+      {/* angka 404 */}
       <div className="relative mb-8">
         <p className="text-[120px] font-black text-gray-100 leading-none select-none">
           4O4

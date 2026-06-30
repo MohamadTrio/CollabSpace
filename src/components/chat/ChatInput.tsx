@@ -1,4 +1,3 @@
-// src/components/chat/ChatInput.tsx
 import { useState, useRef, useEffect, type KeyboardEvent } from "react";
 
 interface Props {
@@ -10,7 +9,7 @@ export default function ChatInput({ onSend, isSending }: Props) {
   const [text, setText] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto resize textarea saat konten berubah
+  // Auto resize textarea
   useEffect(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -20,7 +19,7 @@ export default function ChatInput({ onSend, isSending }: Props) {
 
   async function handleSend() {
     if (!text.trim() || isSending) return;
-    await onSend(text); // ← kirim dengan newline asli, jangan trim newline
+    await onSend(text);
     setText("");
     // Reset tinggi textarea
     if (textareaRef.current) {
@@ -34,7 +33,6 @@ export default function ChatInput({ onSend, isSending }: Props) {
       e.preventDefault();
       handleSend();
     }
-    // Shift+Enter — biarkan default (baris baru)
   }
 
   return (

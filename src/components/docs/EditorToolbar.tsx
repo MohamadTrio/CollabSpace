@@ -1,4 +1,3 @@
-// src/components/docs/EditorToolbar.tsx
 import type { Editor } from "@tiptap/react";
 
 interface Props {

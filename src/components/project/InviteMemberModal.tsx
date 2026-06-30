@@ -1,7 +1,6 @@
-// src/components/project/InviteMemberModal.tsx
 import { useState } from "react";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
-import { db } from "../../lib/firebase"; // Sesuaikan path jika berbeda (misal: "../lib/firebase")
+import { db } from "../../lib/firebase";
 
 interface Props {
   onClose: () => void;
@@ -36,7 +35,7 @@ export default function InviteMemberModal({ onClose, onInvite }: Props) {
         collection(db, "users"),
         where("email", ">=", text),
         where("email", "<=", text + "\uf8ff"),
-        limit(5) // Batasi 5 hasil saja agar tidak kepanjangan
+        limit(5)
       );
 
       const snap = await getDocs(q);
@@ -59,7 +58,7 @@ export default function InviteMemberModal({ onClose, onInvite }: Props) {
     setLoading(false);
     if (res.success) {
       setEmail("");
-      setSuggestions([]); // Kosongkan saran jika berhasil
+      setSuggestions([]);
     }
   }
 
@@ -101,16 +100,16 @@ export default function InviteMemberModal({ onClose, onInvite }: Props) {
             <input
               type="email"
               value={email}
-              onChange={handleEmailChange} // <-- Gunakan fungsi baru ini
+              onChange={handleEmailChange}
               placeholder="nama@email.com"
               required
-              autoComplete="off" // Matikan bawaan browser agar tidak bertumpuk
+              autoComplete="off"
               className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             />
             
             {/* Indikator Loading Kecil (Opsional) */}
             {loadingSuggestions && (
-              <div className="absolute right-3 top-[38px]">
+              <div className="absolute right-3 top-9.5">
                 <svg className="animate-spin w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
@@ -126,7 +125,7 @@ export default function InviteMemberModal({ onClose, onInvite }: Props) {
                     key={suggestionEmail}
                     onClick={() => {
                       setEmail(suggestionEmail);
-                      setSuggestions([]); // Tutup dropdown saat diklik
+                      setSuggestions([]); 
                     }}
                     className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 transition-colors border-b last:border-b-0 border-gray-100"
                   >

@@ -1,4 +1,3 @@
-// src/components/docs/DocumentEditor.tsx
 import { useEffect, useRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -18,7 +17,6 @@ export default function DocumentEditor({
   typingNames,
   onChange,
 }: Props) {
-  // Flag untuk tahu apakah update berasal dari sync luar, bukan dari user
   const isSyncingRef = useRef(false);
 
   const editor = useEditor({
@@ -32,7 +30,6 @@ export default function DocumentEditor({
     editable: canEdit,
 
     onUpdate({ editor }) {
-      // Kalau update ini karena sync dari Firestore, JANGAN panggil onChange
       if (isSyncingRef.current) {
         return;
       }
@@ -40,14 +37,12 @@ export default function DocumentEditor({
     },
   });
 
-  // Sync konten dari Firestore ke editor
   useEffect(() => {
     if (!editor) return;
     const current = editor.getHTML();
     if (current !== content) {
-      isSyncingRef.current = true;          // ← set flag sebelum update
+      isSyncingRef.current = true;         
       editor.commands.setContent(content, false);
-      // Reset flag setelah update selesai diproses
       setTimeout(() => {
         isSyncingRef.current = false;
       }, 0);
