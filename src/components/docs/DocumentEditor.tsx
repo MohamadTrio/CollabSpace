@@ -42,7 +42,7 @@ export default function DocumentEditor({
     const current = editor.getHTML();
     if (current !== content) {
       isSyncingRef.current = true;         
-      editor.commands.setContent(content, false);
+      editor.commands.setContent(content);
       setTimeout(() => {
         isSyncingRef.current = false;
       }, 0);

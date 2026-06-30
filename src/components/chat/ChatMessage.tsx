@@ -38,7 +38,7 @@ export default function ChatMessageItem({ message, isOwn, onDelete }: Props) {
       {/* Avatar */}
       {!isOwn && (
         <div
-          className={`w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center flex-shrink-0 mt-1 ${bg} ${text}`}
+          className={`w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center shrink-0 mt-1 ${bg} ${text}`}
         >
           {initials}
         </div>
