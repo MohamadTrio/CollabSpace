@@ -55,7 +55,7 @@ export default function MemberList({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200">
       <div className="px-5 py-4 border-b border-gray-100">
         <h3 className="font-semibold text-gray-900">
           Anggota ({memberList.length})
@@ -70,7 +70,10 @@ export default function MemberList({
           const initials = getInitials(member.name);
 
           return (
-            <div key={member.uid} className="px-5 py-4 flex items-center gap-3">
+            <div
+              key={member.uid}
+              className="px-5 py-4 flex items-start sm:items-center gap-3"
+            >
               {/* Avatar */}
               <div
                 className={`w-9 h-9 rounded-full text-sm font-bold flex items-center justify-center shrink-0 ${bg} ${text}`}
@@ -78,55 +81,62 @@ export default function MemberList({
                 {initials}
               </div>
 
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-900 truncate">
-                    {member.name}
+              {/* Info & Action Wrapper */}
+              <div className="flex flex-1 flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 min-w-0">
+                {/* Info */}
+                <div className="flex flex-col min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-gray-900 truncate">
+                      {member.name}
+                    </span>
+                    {isMe && (
+                      <span className="text-xs text-gray-400">(kamu)</span>
+                    )}
+                  </div>
+                  <span className="text-xs text-gray-400 truncate">
+                    {member.email}
                   </span>
-                  {isMe && (
-                    <span className="text-xs text-gray-400">(kamu)</span>
+                </div>
+
+                {/* Role selector & Button */}
+                <div className="flex items-center gap-2 mt-1 sm:mt-0">
+                  {isOwner && !isOwnerMember ? (
+                    <select
+                      value={member.role}
+                      onChange={(e) =>
+                        handleRoleChange(
+                          member.uid,
+                          e.target.value as "editor" | "viewer"
+                        )
+                      }
+                      disabled={updatingUid === member.uid}
+                      className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                    >
+                      <option value="editor">Editor</option>
+                      <option value="viewer">Viewer</option>
+                    </select>
+                  ) : (
+                    <span
+                      className={`text-xs font-medium px-2 py-1 rounded-full ${
+                        roleColor[member.role]
+                      }`}
+                    >
+                      {member.role}
+                    </span>
+                  )}
+
+                  {/* Tombol keluarkan */}
+                  {!isOwnerMember && (isOwner || isMe) && (
+                    <button
+                      onClick={() => setConfirmUid(member.uid)}
+                      disabled={removingUid === member.uid}
+                      className="text-xs text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1.5 rounded-lg transition disabled:opacity-50"
+                    >
+                      {isMe ? "Keluar" : "Keluarkan"}
+                    </button>
                   )}
                 </div>
-                <span className="text-xs text-gray-400 truncate">
-                  {member.email}
-                </span>
               </div>
-
-              {/* Role selector — owner bisa ubah role non-owner */}
-              {isOwner && !isOwnerMember ? (
-                <select
-                  value={member.role}
-                  onChange={(e) =>
-                    handleRoleChange(
-                      member.uid,
-                      e.target.value as "editor" | "viewer",
-                    )
-                  }
-                  disabled={updatingUid === member.uid}
-                  className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-                >
-                  <option value="editor">Editor</option>
-                  <option value="viewer">Viewer</option>
-                </select>
-              ) : (
-                <span
-                  className={`text-xs font-medium px-2 py-1 rounded-full ${roleColor[member.role]}`}
-                >
-                  {member.role}
-                </span>
-              )}
-
-              {/* Tombol keluarkan*/}
-              {!isOwnerMember && (isOwner || isMe) && (
-                <button
-                  onClick={() => setConfirmUid(member.uid)}
-                  disabled={removingUid === member.uid}
-                  className="text-xs text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1.5 rounded-lg transition disabled:opacity-50"
-                >
-                  {isMe ? "Keluar" : "Keluarkan"}
-                </button>
-              )}
             </div>
           );
         })}
